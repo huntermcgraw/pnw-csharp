@@ -34,39 +34,6 @@ namespace PnW.City
             _client = new RestClient(GraphQLUrl);
         }
 
-        public async Task<string> GetCityJson(string cityId)
-        {
-            // 1. Construct a MINIMAL, VALID GraphQL Query.
-            // This query uses the structure we previously confirmed works 
-            // (plural 'cities', 'data' field, and simple nested fields).
-            // You MUST include some fields here, but they only need to be the basic ones.
-            string query = $@"
-        query {{
-          cities(id: [{cityId}]) {{
-            data {{
-              nation_id
-              name
-            }}
-          }}
-        }}";
-
-            // 2. Prepare the POST request body
-            var request = new RestRequest("/", Method.Post);
-            request.AddJsonBody(new { query = query });
-
-            // 3. Execute the request using the non-generic IRestResponse/RestResponse
-            // This tells RestSharp: "Just send the request, don't try to deserialize anything."
-            RestResponse response = await _client.ExecuteAsync(request);
-
-            if (response.IsSuccessful)
-            {
-                // Return the raw JSON string
-                return response.Content;
-            }
-
-            // Return error details if the call fails
-            throw new Exception($"API Call Failed. Status: {response.StatusCode}. Content: {response.Content}");
-        }
         public async Task<City> GetCity(string cityId)
         {
 
