@@ -36,40 +36,46 @@ namespace PnW.City
 
         public async Task<City> GetCity(string cityId)
         {
-
             string query = $@"
                 query {{
                 cities(id: [{cityId}]) {{
                     data {{
-                        name
+                        id
                         nation_id
-                        coalpower
-                        oilpower
-                        nuclearpower
-                        windpower
-                        coalmine
-                        oilwell
-                        ironmine
-                        bauxitemine
-                        leadmine
-                        uramine
+                        nation
+                        name
+                        date
+                        infrastructure
+                        land
+                        powered
+                        oil_power
+                        wind_power
+                        coal_power
+                        nuclear_power
+                        coal_mine
+                        oil_well
+                        uranium_mine
+                        barracks
                         farm
-                        gasrefinery
-                        steelmill
-                        aluminumrefinery
-                        munitionsfactory
-                        policestation
+                        police_station
                         hospital
-                        recyclingcenter
+                        recycling_center
                         subway
                         supermarket
                         bank
-                        mall
+                        shopping_mall
                         stadium
-                        barracks
+                        lead_mine
+                        iron_mine
+                        bauxite_mine
+                        oil_refinery
+                        aluminum_refinery
+                        steel_mill
+                        munitions_factory
                         factory
                         hangar
                         drydock
+                        nuke_date
                     }}
                 }}
                 }}";
@@ -91,58 +97,41 @@ namespace PnW.City
 
     public class City
     {
-        public bool success { get; set; }
-        public string? cityid { get; set; }
-        public string? url { get; set; }
+        public string? id { get; set; }
         public string? nation_id { get; set; }
-        public string? name { get; set; }
         public string? nation { get; set; }
-        public string? leader { get; set; }
-        public string? continent { get; set; }
-        public string? founded { get; set; }
-        public int? age { get; set; }
-        public string? powered { get; set; }
-        public string? infrastructure { get; set; }
-        public string? land { get; set; }
-        public double? population { get; set; }
-        public double? popdensity { get; set; }
-        public int? crime { get; set; }
-        public double? disease { get; set; }
-        public int? commerce { get; set; }
-        public double? avgincome { get; set; }
-        public int? pollution { get; set; }
-        public int? nuclearpollution { get; set; }
-        public int? basepop { get; set; }
-        public double? basepopdensity { get; set; }
-        public double? minimumwage { get; set; }
-        public double? poplostdisease { get; set; }
-        public int? poplostcrime { get; set; }
-        public string? imp_coalpower { get; set; }
-        public string? imp_oilpower { get; set; }
-        public string? imp_nuclearpower { get; set; }
-        public string? imp_windpower { get; set; }
-        public string? imp_coalmine { get; set; }
-        public string? imp_oilwell { get; set; }
-        public string? imp_ironmine { get; set; }
-        public string? imp_bauxitemine { get; set; }
-        public string? imp_leadmine { get; set; }
-        public string? imp_uramine { get; set; }
-        public string? imp_farm { get; set; }
-        public string? imp_gasrefinery { get; set; }
-        public string? imp_steelmill { get; set; }
-        public string? imp_aluminumrefinery { get; set; }
-        public string? imp_munitionsfactory { get; set; }
-        public string? imp_policestation { get; set; }
-        public string? imp_hospital { get; set; }
-        public string? imp_recyclingcenter { get; set; }
-        public string? imp_subway { get; set; }
-        public string? imp_supermarket { get; set; }
-        public string? imp_bank { get; set; }
-        public string? imp_mall { get; set; }
-        public string? imp_stadium { get; set; }
-        public string? imp_barracks { get; set; }
-        public string? imp_factory { get; set; }
-        public string? imp_hangar { get; set; }
-        public string? imp_drydock { get; set; }
+        public string? name { get; set; }
+        public string? date { get; set; }
+        public float? infrastructure { get; set; }
+        public float? land { get; set; }
+        public bool? powered { get; set; }
+        public int? oil_power { get; set; }
+        public int? wind_power { get; set; }
+        public int? coal_power { get; set; }
+        public int? nuclear_power { get; set; }
+        public int? coal_mine { get; set; }
+        public int? oil_well { get; set; }
+        public int? uranium_mine { get; set; }
+        public int? barracks { get; set; }
+        public int? farm { get; set; }
+        public int? police_station { get; set; }
+        public int? hospital { get; set; }
+        public int? recycling_center { get; set; }
+        public int? subway { get; set; }
+        public int? supermarket { get; set; }
+        public int? bank { get; set; }
+        public int? shopping_mall { get; set; }
+        public int? stadium { get; set; }
+        public int? lead_mine { get; set; }
+        public int? iron_mine { get; set; }
+        public int? bauxite_mine { get; set; }
+        public int? oil_refinery { get; set; }
+        public int? aluminum_refinery { get; set; }
+        public int? steel_mill { get; set; }
+        public int? munitions_factory { get; set; }
+        public int? factory { get; set; }
+        public int? hangar { get; set; }
+        public int? drydock { get; set; }
+        public string? nuke_date { get; set; }
     }
 }
