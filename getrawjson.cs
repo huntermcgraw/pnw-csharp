@@ -2,7 +2,7 @@
 using System.Text.Json;
 using DotNetEnv;
 
-class Program
+class RawJson
 {
   static async Task GetRawJson()
   {
