@@ -6,10 +6,11 @@ namespace PoliticsAndWarAPIExamples
 {
     public class Program
     {
+
         public static async Task Main(string[] args)
         {
             Env.Load();
-            
+
             string? apiKey = Environment.GetEnvironmentVariable("PNW_API_KEY");
 
             if (string.IsNullOrEmpty(apiKey))
@@ -17,7 +18,7 @@ namespace PoliticsAndWarAPIExamples
                 Console.WriteLine("ERROR: PNW_API_KEY environment variable is not set. Cannot run the application.");
                 return;
             }
-            
+
             const string targetCityId = "1332734";
 
             try
@@ -25,7 +26,9 @@ namespace PoliticsAndWarAPIExamples
                 Console.WriteLine($"Fetching data for City ID: {targetCityId}...");
 
                 var api = new CityAPI(apiKey);
-                City cityData = await api.GetCity(targetCityId);
+                string cityData = await api.GetCityJson(targetCityId);
+                Console.WriteLine(cityData);
+                /*City cityData = await api.GetCity(targetCityId);
 
                 if (cityData != null)
                 {
@@ -38,7 +41,7 @@ namespace PoliticsAndWarAPIExamples
                 else
                 {
                     Console.WriteLine("Failed to retrieve city data or City object was null.");
-                }
+                }*/
             }
             catch (Exception ex)
             {
@@ -76,6 +79,39 @@ namespace PoliticsAndWarAPIExamples
             _client = new RestClient(GraphQLUrl);
         }
 
+        public async Task<string> GetCityJson(string cityId)
+        {
+            // 1. Construct a MINIMAL, VALID GraphQL Query.
+            // This query uses the structure we previously confirmed works 
+            // (plural 'cities', 'data' field, and simple nested fields).
+            // You MUST include some fields here, but they only need to be the basic ones.
+            string query = $@"
+        query {{
+          cities(id: [{cityId}]) {{
+            data {{
+              nation_id
+              name
+            }}
+          }}
+        }}";
+
+            // 2. Prepare the POST request body
+            var request = new RestRequest("/", Method.Post);
+            request.AddJsonBody(new { query = query });
+
+            // 3. Execute the request using the non-generic IRestResponse/RestResponse
+            // This tells RestSharp: "Just send the request, don't try to deserialize anything."
+            RestResponse response = await _client.ExecuteAsync(request);
+
+            if (response.IsSuccessful)
+            {
+                // Return the raw JSON string
+                return response.Content;
+            }
+
+            // Return error details if the call fails
+            throw new Exception($"API Call Failed. Status: {response.StatusCode}. Content: {response.Content}");
+        }
         public async Task<City> GetCity(string cityId)
         {
 
