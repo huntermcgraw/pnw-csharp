@@ -5,3 +5,4 @@ appsettings.Development.json
 appsettings.Secret.json
 secrets.json
 .env
+cityfields.txt

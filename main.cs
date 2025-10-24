@@ -1,5 +1,8 @@
+// Reminder that automated trading/banking/etc are not allowed
+
 using DotNetEnv;
-using PnW.City;
+using PnW.Classes;
+using PnW.Query;
 
 namespace PnWWrapper
 {
@@ -24,15 +27,13 @@ namespace PnWWrapper
             {
                 Console.WriteLine($"Fetching data for City ID: {targetCityId}...");
 
-                var api = new CityAPI(apiKey);
-                City cityData = await api.GetCity(targetCityId);
-
-                if (cityData != null)
+                var api = new API(apiKey);
+                var data = await api.GetQuery<City>(targetCityId, ["name", "barracks", "factory", "hangar", "drydock"]);
+                if (data != null)
                 {
-                    Console.WriteLine("\n--- City Data Retrieved ---");
-                    Console.WriteLine($"Name: {cityData.name}");
-                    //Console.WriteLine($"Nation: {cityData.nation} (ID: {cityData.nation_id})");
-                    Dictionary<string, int> mil = cityData.GetMilitary();
+                    Console.WriteLine("\n--- Data Retrieved ---");
+                    Console.WriteLine($"Name: {data.name}");
+                    Dictionary<string, int> mil = data.GetMilitary();
                     foreach (KeyValuePair<string, int> pair in mil)
                     {
                         Console.WriteLine($"{pair.Key}: {pair.Value}");
