@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace PnW.City
 {
-    
+
     public class CityPaginatorData
     {
 
@@ -35,14 +35,48 @@ namespace PnW.City
         }
 
         public async Task<City> GetCity(string cityId)
-        {
+        {// there are way more nation fields
             string query = $@"
                 query {{
                 cities(id: [{cityId}]) {{
                     data {{
                         id
                         nation_id
-                        nation
+                        nation {{
+                            id
+                            alliance_id
+                            alliance_position
+                            alliance_position_id
+
+
+                            nation_name
+                            leader_name
+                            continent
+                            war_policy
+                            war_policy_turns
+                            domestic_policy
+                            domestic_policy_turns
+                            color
+                            num_cities
+
+                            score
+                            update_tz
+                            population
+                            flag
+                            vacation_mode_turns
+                            beige_turns
+                            espionage_available
+                            last_active
+                            date
+                            soldiers
+                            tanks
+                            aircraft
+                            ships
+                            missiles
+                            nukes
+                            spies
+
+                        }}
                         name
                         date
                         infrastructure
@@ -99,7 +133,7 @@ namespace PnW.City
     {
         public string? id { get; set; }
         public string? nation_id { get; set; }
-        public string? nation { get; set; }
+        public Object? nation { get; set; }
         public string? name { get; set; }
         public string? date { get; set; }
         public float? infrastructure { get; set; }
@@ -112,7 +146,7 @@ namespace PnW.City
         public int? coal_mine { get; set; }
         public int? oil_well { get; set; }
         public int? uranium_mine { get; set; }
-        public int? barracks { get; set; }
+        public int barracks { get; set; }
         public int? farm { get; set; }
         public int? police_station { get; set; }
         public int? hospital { get; set; }
@@ -129,9 +163,20 @@ namespace PnW.City
         public int? aluminum_refinery { get; set; }
         public int? steel_mill { get; set; }
         public int? munitions_factory { get; set; }
-        public int? factory { get; set; }
-        public int? hangar { get; set; }
-        public int? drydock { get; set; }
+        public int factory { get; set; }
+        public int hangar { get; set; }
+        public int drydock { get; set; }
         public string? nuke_date { get; set; }
+
+        public Dictionary<string, int> GetMilitary()
+        {
+            return new Dictionary<string, int>
+            {
+                {"Barracks", this.barracks },
+                {"Factory", this.factory },
+                {"Hangar", this.hangar },
+                {"Drydock", this.drydock}
+            };
+        }
     }
 }

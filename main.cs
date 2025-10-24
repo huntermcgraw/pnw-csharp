@@ -31,9 +31,12 @@ namespace PnWWrapper
                 {
                     Console.WriteLine("\n--- City Data Retrieved ---");
                     Console.WriteLine($"Name: {cityData.name}");
-                    Console.WriteLine($"Nation: {cityData.nation} (ID: {cityData.nation_id})");
-                    Console.WriteLine($"Population: {cityData.population:N0}");
-                    Console.WriteLine($"Infrastructure: {cityData.infrastructure}");
+                    //Console.WriteLine($"Nation: {cityData.nation} (ID: {cityData.nation_id})");
+                    Dictionary<string, int> mil = cityData.GetMilitary();
+                    foreach (KeyValuePair<string, int> pair in mil)
+                    {
+                        Console.WriteLine($"{pair.Key}: {pair.Value}");
+                    }
                 }
                 else
                 {
