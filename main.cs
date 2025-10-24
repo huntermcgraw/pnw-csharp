@@ -28,7 +28,7 @@ namespace PnWWrapper
                 Console.WriteLine($"Fetching data for City ID: {targetCityId}...");
 
                 var api = new API(apiKey);
-                var data = await api.GetQuery<City>(targetCityId, ["name", "barracks", "factory", "hangar", "drydock"]);
+                City data = await api.GetQuery<City>(targetCityId, ["name", "barracks", "factory", "hangar", "drydock"]);
                 if (data != null)
                 {
                     Console.WriteLine("\n--- Data Retrieved ---");
