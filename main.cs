@@ -33,8 +33,8 @@ namespace PnWWrapper
                 {
                     Console.WriteLine("\n--- Data Retrieved ---");
                     Console.WriteLine($"Name: {data.name}");
-                    Dictionary<string, int> mil = data.GetMilitary();
-                    foreach (KeyValuePair<string, int> pair in mil)
+                    Dictionary<string, int?> mil = data.GetMilitary();
+                    foreach (KeyValuePair<string, int?> pair in mil)
                     {
                         Console.WriteLine($"{pair.Key}: {pair.Value}");
                     }
