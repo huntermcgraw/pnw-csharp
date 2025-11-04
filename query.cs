@@ -69,7 +69,7 @@ namespace PnW.Query
             throw new Exception($"GraphQL Call Failed (City/Nation ID: {id}). Status: {response.StatusCode}. Error: {response.ErrorMessage ?? response.Content}");
         }
 
-        internal async Task<T> GetQuery<T>(string targetId, List<string> fieldList)
+        public async Task<T> GetQuery<T>(string targetId, List<string> fieldList)
         {
             string queryType = _map[typeof(T)];
             Console.WriteLine(queryType);
