@@ -72,7 +72,6 @@ namespace PnW.Query
         public async Task<T> GetQuery<T>(string targetId, List<string> fieldList)
         {
             string queryType = _map[typeof(T)];
-            Console.WriteLine(queryType);
             return await GetData<T>(queryType, targetId, fieldList);
         }
     }
