@@ -1,4 +1,4 @@
-﻿namespace PnW.Classes
+﻿namespace PnW.Models
 {
 
     public class City

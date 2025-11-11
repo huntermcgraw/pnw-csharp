@@ -1,26 +1,10 @@
 using RestSharp;
-using System.Text.Json.Serialization;
+using PnW.Models;
 
-using PnW.Classes;
-
-
-
-namespace PnW.Query
+namespace PnW.Client
 {
-    public class PaginatorData<T>
-    {
 
-        [JsonPropertyName("data")]
-        public List<T> Data { get; set; } = new List<T>();
-    }
-
-    public class GraphQLResponse<T>
-    {
-        [JsonPropertyName("data")]
-        public T? Data { get; set; }
-    }
-
-    public class API
+    public class PnWAPIClient
     {
         private readonly RestClient _client;
 
@@ -32,7 +16,7 @@ namespace PnW.Query
             [typeof(Nation)] = "nations"
         };
 
-        public API(string apiKey)
+        public PnWAPIClient(string apiKey)
         {
             GraphQLUrl = $"https://api.politicsandwar.com/graphql?api_key={apiKey}";
             _client = new RestClient(GraphQLUrl);
