@@ -17,10 +17,16 @@ namespace PnW.Client
             [typeof(Nation)] = "nations"
         };
 
-        public PnWAPIClient(string apiKey)
+        public PnWAPIClient(string apiKey, string? botKey = null)
         {
             GraphQLUrl = $"https://api.politicsandwar.com/graphql?api_key={apiKey}";
             _client = new RestClient(GraphQLUrl);
+
+            if (!string.IsNullOrEmpty(botKey))
+        {
+            // RestSharp provides a standardized way to add default headers
+            _client.AddDefaultHeader("X-Bot-Key", botKey);
+        }
         }
 
         private string LoadResourceQuery(string resourceName)
@@ -60,18 +66,54 @@ namespace PnW.Client
             throw new Exception($"GraphQL Call Failed (City/Nation ID: {id}). Status: {response.StatusCode}. Error: {response.ErrorMessage ?? response.Content}");
         }
 
+        public async Task<T> ExecuteMutationAsync<T>(string mutation, object variables)
+        {
+            var request = new RestRequest("/", Method.Post);
+            
+            request.AddJsonBody(new { query = mutation, variables = variables });
+
+            RestResponse<GraphQLResponse<T>> response = await _client.ExecuteAsync<GraphQLResponse<T>>(request);
+
+            if (response.IsSuccessful && response.Data.Data != null)
+            {
+                return response.Data.Data;
+            }
+
+            throw new Exception($"Mutation Failed. Status: {response.StatusCode}. Error: {response.ErrorMessage ?? response.Content}");
+        }
+
         public async Task<T> GetQuery<T>(string targetId, List<string> fieldList)
         {
             if (!_map.TryGetValue(typeof(T), out string? queryType))
             {
-                 throw new InvalidOperationException($"Type {typeof(T).Name} is not mapped to a GraphQL resource.");
+                throw new InvalidOperationException($"Type {typeof(T).Name} is not mapped to a GraphQL resource.");
             }
             string queryTemplate = LoadResourceQuery("GetResource");
             string fields = string.Join("\n", fieldList);
-            
+
             string finalQuery = string.Format(queryTemplate, queryType, targetId, fields);
 
             return await ExecuteGraphQLQueryAsync<T>(finalQuery, queryType, targetId);
+        }
+
+
+        public async Task<BankDepositRecord> BankDepositAsync(BankDepositInput input)
+        {
+            string mutationTemplate = LoadResourceQuery("BankDeposit");
+
+            object variables = input;
+
+            var response = await ExecuteMutationAsync<Dictionary<string, BankDepositRecord>>(
+                mutationTemplate,
+                variables
+            );
+
+            if (response.TryGetValue("bankDeposit", out var record))
+            {
+                return record;
+            }
+
+            throw new Exception("Bank Deposit succeeded but could not parse response record.");
         }
     }
 
