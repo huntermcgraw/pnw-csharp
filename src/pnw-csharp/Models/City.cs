@@ -51,39 +51,5 @@
             };
         }
     }
-    public class Nation
-    {
-        public string? id { get; set; }
-        public string? nation_name { get; set; }
-        public string? leader_name { get; set; }
-    }
-
-    public class Trade
-    {
-        public string? id { get; set; }
-        public string? type { get; set; }
-        public string? date { get; set; }
-        public string? sender_id { get; set; }
-        public string? receiver_id { get; set; }
-
-    }
-
-    public class Bounty
-    {
-        public string? id { get; set; }
-        public string? date { get; set; }
-    }
-
-    public class MilitaryResearch
-    {
-        public string? id { get; set; }
-        public string? date { get; set; }
-    }
     
-        public class Alliance
-    {
-        public string? id { get; set; }
-        public string? name { get; set; }
-    }
-
 }
