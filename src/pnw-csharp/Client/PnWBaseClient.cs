@@ -10,7 +10,7 @@ namespace PnW.Client
         protected readonly RestClient _client;
         protected readonly string GraphQLUrl;
 
-        protected PnWBaseClient(string apiKey, string? botKey = null)
+        protected PnWBaseClient(string apiKey, string? botKey = null, string? botKeyApiKey = null)
         {
             GraphQLUrl = $"https://api.politicsandwar.com/graphql?api_key={apiKey}";
             _client = new RestClient(GraphQLUrl);
@@ -59,7 +59,7 @@ namespace PnW.Client
         {
             var request = new RestRequest("/", Method.Post);
 
-            request.AddJsonBody(new { mutation, variables }); // query = mutation
+            request.AddJsonBody(new { query = mutation, variables });
 
             var response = await _client.ExecuteAsync<GraphQLResponse<T>>(request);
 

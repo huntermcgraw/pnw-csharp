@@ -15,6 +15,7 @@ namespace PnWWrapper
 
             string? apiKey = Environment.GetEnvironmentVariable("PNW_API_KEY");
             string? botKey = Environment.GetEnvironmentVariable("PNW_BOT_KEY");
+            string? botKeyApiKey = Environment.GetEnvironmentVariable("PNW_BOT_KEY_API_KEY");
 
             if (string.IsNullOrEmpty(apiKey))
             {
@@ -22,19 +23,24 @@ namespace PnWWrapper
                 return;
             }
 
-            /*const string targetCityId = "1332734";
+            const string targetCityId = "1332734";
+            const string targetNationId = "698069";
+
+            BankDepositInput newDeposit = new BankDepositInput();
+            newDeposit.Money = 100000;
+            newDeposit.Note = "safekeeping";
 
             try
             {
-                Console.WriteLine($"Fetching data for City ID: {targetCityId}...");
+                var pnw = new PnWClient(apiKey, botKey, botKeyApiKey);
+                var city = await pnw.Query.GetQueryAsync<City>(targetCityId, new() { "name", "barracks", "factory", "hangar", "drydock" });
+                //var deposit = await pnw.BankDeposit.DepositAsync(newDeposit);
 
-                var api = new PnWAPIClient(apiKey);
-                City data = await api.GetQuery<City>(targetCityId, ["name", "barracks", "factory", "hangar", "drydock"]);
-                if (data != null)
+                if (city != null)
                 {
                     Console.WriteLine("\n--- Data Retrieved ---");
-                    Console.WriteLine($"Name: {data.name}");
-                    Dictionary<string, int?> mil = data.GetMilitary();
+                    Console.WriteLine($"Name: {city.name}");
+                    Dictionary<string, int?> mil = city.GetMilitary();
                     foreach (KeyValuePair<string, int?> pair in mil)
                     {
                         Console.WriteLine($"{pair.Key}: {pair.Value}");
@@ -44,28 +50,11 @@ namespace PnWWrapper
                 {
                     Console.WriteLine("Failed to retrieve city data or City object was null.");
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }*/
-            const string targetNationId = "698069";
-            BankDepositInput deposit = new BankDepositInput();
-            deposit.Money = 100000;
-            deposit.Note = "safekeeping";
 
-            Console.WriteLine($"Depositing funds from Nation ID: {targetNationId}...");
-
-            try
-            {
-                var api = new PnWAPIClient(apiKey, botKey);
-
-                BankDepositRecord record = await api.BankDepositAsync(deposit);
-
-                Console.WriteLine($"Deposit Record ID: {record.Id}");
-                Console.WriteLine($"Amount Deposited: ${record.Money}");
-                Console.WriteLine($"Date: {record.Date}");
-                Console.WriteLine($"Note: {record.Note}");
+                /*Console.WriteLine($"Deposit Record ID: {deposit.Id}");
+                Console.WriteLine($"Amount Deposited: ${deposit.Money}");
+                Console.WriteLine($"Date: {deposit.Date}");
+                Console.WriteLine($"Note: {deposit.Note}");*/
             }
             catch (Exception ex)
             {

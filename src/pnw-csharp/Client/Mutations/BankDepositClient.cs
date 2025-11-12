@@ -4,8 +4,8 @@ namespace PnW.Client.Mutations
 {
     public class BankDepositClient : PnWBaseClient
     {
-        public BankDepositClient(string apiKey, string? botKey = null)
-            : base(apiKey, botKey) { }
+        public BankDepositClient(string apiKey, string? botKey = null, string? botKeyApiKey = null)
+            : base(apiKey, botKey, botKeyApiKey) { }
 
         public async Task<BankDepositRecord> DepositAsync(BankDepositInput input)
         {

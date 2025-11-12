@@ -10,8 +10,8 @@ namespace PnW.Client
             [typeof(Nation)] = "nations"
         };
 
-        public QueryClient(string apiKey, string? botKey = null)
-            : base(apiKey, botKey) { }
+        public QueryClient(string apiKey, string? botKey = null, string? botKeyApiKey = null)
+            : base(apiKey, botKey, botKeyApiKey) { }
 
         public async Task<T> GetQueryAsync<T>(string targetId, List<string> fieldList)
         {
