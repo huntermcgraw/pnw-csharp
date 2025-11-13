@@ -1,7 +1,9 @@
 namespace PnW.Models
 {
-    public class BankDepositInput
+    public class BankWithdrawInput
     {
+        public required string receiver;
+        public required int receiver_type;
         public float? money { get; set; }
         public float? coal { get; set; }
         public float? oil { get; set; }

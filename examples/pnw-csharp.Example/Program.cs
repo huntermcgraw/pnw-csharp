@@ -27,8 +27,8 @@ namespace PnWWrapper
             const string targetNationId = "698069";
 
             BankDepositInput newDeposit = new BankDepositInput();
-            newDeposit.Money = 100000;
-            newDeposit.Note = "safekeeping";
+            newDeposit.money = 100000;
+            newDeposit.note = "safekeeping";
 
             try
             {
