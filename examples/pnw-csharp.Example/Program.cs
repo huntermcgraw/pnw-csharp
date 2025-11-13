@@ -45,6 +45,9 @@ namespace PnWWrapper
                     {
                         Console.WriteLine($"{pair.Key}: {pair.Value}");
                     }
+
+                    int? remaining = pnw.Query.RateLimitRemaining;
+                    Console.WriteLine($"Rate limit remaining: {remaining}");
                 }
                 else
                 {

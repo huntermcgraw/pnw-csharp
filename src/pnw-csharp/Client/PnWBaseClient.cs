@@ -7,6 +7,8 @@ namespace PnW.Client
 
     public abstract class PnWBaseClient
     {
+        public int? RateLimitRemaining { get; private set; } // make private somehow?
+
         protected readonly RestClient _client;
         protected readonly string GraphQLUrl;
 
@@ -43,6 +45,11 @@ namespace PnW.Client
             RestResponse<GraphQLResponse<Dictionary<string, PaginatorData<T>>>> response =
                 await _client.ExecuteAsync<GraphQLResponse<Dictionary<string, PaginatorData<T>>>>(request);
 
+            // put in try block?
+            var header = response?.Headers?.FirstOrDefault(h => string.Equals(h.Name, "x-ratelimit-remaining", StringComparison.OrdinalIgnoreCase));
+            if (header != null && int.TryParse(header.Value?.ToString(), out var remaining))
+                RateLimitRemaining = remaining;
+
             if (response.IsSuccessful && response.Data?.Data?.Count > 0)
             {
                 var root = response.Data.Data;
@@ -63,7 +70,12 @@ namespace PnW.Client
 
             var response = await _client.ExecuteAsync<GraphQLResponse<T>>(request);
 
-            if (response.IsSuccessful && response.Data?.Data != null)
+            // put in try block?
+            var header = response?.Headers?.FirstOrDefault(h => string.Equals(h.Name, "x-ratelimit-remaining", StringComparison.OrdinalIgnoreCase));
+            if (header != null && int.TryParse(header.Value?.ToString(), out var remaining))
+                RateLimitRemaining = remaining;
+
+            if (response != null && response.IsSuccessful && response.Data != null && response.Data.Data != null)
             {
                 return response.Data.Data;
             }
