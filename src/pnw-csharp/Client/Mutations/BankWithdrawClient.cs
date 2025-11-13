@@ -18,7 +18,7 @@ namespace PnW.Client.Mutations
             if (response.TryGetValue("bankWithdraw", out var record))
                 return record;
 
-            throw new Exception("Bank withdrawl succeeded but response record was not found.");
+            throw new Exception("Bank withdrawal succeeded but response record was not found.");
         }
     }
 }
