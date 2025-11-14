@@ -7,7 +7,9 @@ namespace PnW.Client
         private readonly Dictionary<Type, string> _map = new()
         {
             [typeof(City)] = "cities",
-            [typeof(Nation)] = "nations"
+            [typeof(Nation)] = "nations",
+            [typeof(Alliance)] = "alliances",
+            [typeof(Trade)] = "trades"
         };
 
         public QueryClient(string apiKey, string? botKey = null, string? botKeyApiKey = null)
