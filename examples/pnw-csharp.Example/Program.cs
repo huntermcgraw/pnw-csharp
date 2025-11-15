@@ -34,7 +34,7 @@ namespace PnWWrapper
             {
                 var pnw = new PnWClient(apiKey, botKey, botKeyApiKey);
                 var city = await pnw.Query.GetQueryAsync<City>(targetCityId, new() { "name", "barracks", "factory", "hangar", "drydock" });
-                //var deposit = await pnw.BankDeposit.DepositAsync(newDeposit);
+                var deposit = await pnw.BankDeposit.DepositAsync(newDeposit);
 
                 if (city != null)
                 {

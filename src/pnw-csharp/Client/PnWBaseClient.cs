@@ -18,10 +18,10 @@ namespace PnW.Client
             _client = new RestClient(GraphQLUrl);
 
             if (!string.IsNullOrEmpty(botKey))
-                _client.AddDefaultHeader("X-Bot-Key", botKey);
+                _client.AddDefaultHeader("x-bot-key", botKey);
 
             if (!string.IsNullOrEmpty(botKeyApiKey))
-                _client.AddDefaultHeader("X-Bot-Key-Api-Key", botKeyApiKey);
+                _client.AddDefaultHeader("x-api-key", botKeyApiKey);
         }
 
         protected string LoadResourceQuery(string resourceName)
