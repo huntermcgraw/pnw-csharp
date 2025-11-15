@@ -7,10 +7,10 @@ namespace PnW.Client.Mutations
         public BankDepositClient(string apiKey, string? botKey = null, string? botKeyApiKey = null)
             : base(apiKey, botKey, botKeyApiKey) { }
 
-        public async Task<BankRecord> DepositAsync(BankDepositInput input)
+        public async Task<Bankrec> DepositAsync(BankDepositInput input)
         {
             string mutationTemplate = LoadResourceQuery("BankDeposit");
-            var response = await ExecuteMutationAsync<Dictionary<string, BankRecord>>(
+            var response = await ExecuteMutationAsync<Dictionary<string, Bankrec>>(
                 mutationTemplate,
                 input
             );

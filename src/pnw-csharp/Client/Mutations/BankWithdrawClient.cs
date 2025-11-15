@@ -7,10 +7,10 @@ namespace PnW.Client.Mutations
         public BankWithdrawClient(string apiKey, string? botKey = null, string? botKeyApiKey = null)
             : base(apiKey, botKey, botKeyApiKey) { }
 
-        public async Task<BankRecord> WithdrawAsync(BankWithdrawInput input)
+        public async Task<Bankrec> WithdrawAsync(BankWithdrawInput input)
         {
             string mutationTemplate = LoadResourceQuery("BankWithdraw");
-            var response = await ExecuteMutationAsync<Dictionary<string, BankRecord>>(
+            var response = await ExecuteMutationAsync<Dictionary<string, Bankrec>>(
                 mutationTemplate,
                 input
             );

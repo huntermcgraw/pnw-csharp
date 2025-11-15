@@ -2,7 +2,7 @@
 
 namespace PnW.Models
 {
-    public class BankRecord
+    public class Bankrec
     {
         public int id { get; set; }
         public DateTime date { get; set; }
