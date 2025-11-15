@@ -19,7 +19,7 @@ namespace PnW.Client
 
             if (!string.IsNullOrEmpty(botKey))
                 _client.AddDefaultHeader("X-Bot-Key", botKey);
-            
+
             if (!string.IsNullOrEmpty(botKeyApiKey))
                 _client.AddDefaultHeader("X-Bot-Key-Api-Key", botKeyApiKey);
         }
