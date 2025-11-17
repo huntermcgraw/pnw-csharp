@@ -1,5 +1,3 @@
-// File: src/pnw-csharp/Models/BankDepositRecord.cs
-
 namespace PnW.Models
 {
     public class Bankrec
